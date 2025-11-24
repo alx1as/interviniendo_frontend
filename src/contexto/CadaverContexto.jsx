@@ -3,16 +3,16 @@ import { apiGet, apiPost, apiDelete } from "../api";
 
 const CadaverContexto = createContext();
 
-const PARTICIPANTES_ENUM = ["Valen", "Alexia", "Bicha", "Camila", "Maca"];
+const PARTICIPANTES_ENUM = ["Vale", "Alexia", "Bicha", "Camila", "Maca"];
 
 // Normalización de nombres
 function normalizarNombre(nombre) {
   const limpio = nombre.trim().toLowerCase();
 
   const mapa = {
-    valen: "Valen",
-    vale: "Valen",
-    valentina: "Valen",
+    valen: "Vale",
+    vale: "Vale",
+    valentina: "Vale",
 
     alexia: "Alexia",
     ale: "Alexia",
@@ -97,38 +97,49 @@ export function CadaverProvider({ children }) {
   }
 
   // Agregar verso
-  function agregarVerso(usuario, texto) {
-    const nombre = normalizarNombre(usuario);
-    const versoLimpio = texto.trim();
-    if (!versoLimpio) return;
+ function agregarVerso(usuario, texto) {
+  const nombre = normalizarNombre(usuario);
+  const versoLimpio = texto.trim();
+  if (!versoLimpio) return;
 
-    setCadaver((prev) => {
-      const idx = prev.rondaActual - 1;
+  // Actualiza el estado local
+  setCadaver((prev) => {
+    const idx = prev.rondaActual - 1;
 
-      const rondas = [...prev.rondas];
-      rondas[idx] = {
-        ...rondas[idx],
-        versos: [...rondas[idx].versos, versoLimpio],
-      };
+    const rondas = [...prev.rondas];
+    rondas[idx] = {
+      ...rondas[idx],
+      versos: [...rondas[idx].versos, versoLimpio],
+    };
 
-      const participantes = prev.participantes.includes(nombre)
-        ? prev.participantes
-        : [...prev.participantes, nombre];
+    const participantes = prev.participantes.includes(nombre)
+      ? prev.participantes
+      : [...prev.participantes, nombre];
 
-      const actualizado = {
-        ...prev,
-        rondas,
-        participantes,
-      };
+    const actualizado = {
+      ...prev,
+      rondas,
+      participantes,
+    };
 
-      // Cierre automático
-      if (PARTICIPANTES_ENUM.every((p) => participantes.includes(p))) {
-        actualizado.cerrado = true;
+    // Cierre automático
+    if (PARTICIPANTES_ENUM.every((p) => participantes.includes(p))) {
+      actualizado.cerrado = true;
+    }
+
+    return actualizado;
+  });
+
+  // 🔥 Agregar esto: pide al backend el estado correcto después de guardar
+  setTimeout(() => {
+    apiGet("/cadaver").then((data) => {
+      if (data && data.rondas) {
+        setCadaver(data);
       }
-
-      return actualizado;
     });
-  }
+  }, 200); // antes eran 40ms → demasiado bajo
+}
+
 
   // Cambiar de ronda manualmente
   function agregarRonda() {
