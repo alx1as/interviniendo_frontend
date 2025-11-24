@@ -5,7 +5,7 @@ const CadaverContexto = createContext();
 
 const PARTICIPANTES_ENUM = ["Valen", "Alexia", "Bicha", "Camila", "Maca"];
 
-// normalización de nombres
+// Normalización de nombres
 function normalizarNombre(nombre) {
   const limpio = nombre.trim().toLowerCase();
 
@@ -24,7 +24,7 @@ function normalizarNombre(nombre) {
     camila: "Camila",
 
     maca: "Maca",
-    macarena: "Maca"
+    macarena: "Maca",
   };
 
   return mapa[limpio] || nombre;
@@ -37,13 +37,13 @@ export function CadaverProvider({ children }) {
     participantes: [],
     rondas: [{ numero: 1, versos: [] }],
     rondaActual: 1,
-    cerrado: false
+    cerrado: false,
   };
 
   const [cadaver, setCadaver] = useState(estructuraInicial);
   const [cargando, setCargando] = useState(true);
 
-  // cargar desde backend
+  // Cargar desde backend la primera vez
   useEffect(() => {
     apiGet("/cadaver").then((data) => {
       if (data && data.rondas) setCadaver(data);
@@ -51,20 +51,23 @@ export function CadaverProvider({ children }) {
     });
   }, []);
 
-  // guardar en backend ante cada cambio
+  // Guardar en backend cada vez que cambia el estado
   useEffect(() => {
-    if (!cargando) {
-      apiPost("/cadaver", cadaver);
-    }
-  }, [cadaver, cargando]);
+    if (cargando) return;
+    if (!cadaver || !cadaver.rondas) return;
 
-  // reset total
+    apiPost("/cadaver", cadaver).catch((err) =>
+      console.error("Error guardando:", err)
+    );
+  }, [cadaver]);
+
+  // Reset total
   async function reiniciarCadaver() {
     await apiDelete("/cadaver");
     setCadaver(estructuraInicial);
   }
 
-  // iniciar juego
+  // Iniciar juego
   function iniciarCadaver(usuario) {
     const nombre = normalizarNombre(usuario);
 
@@ -74,16 +77,16 @@ export function CadaverProvider({ children }) {
       participantes: [nombre],
       rondas: [{ numero: 1, versos: [] }],
       rondaActual: 1,
-      cerrado: false
+      cerrado: false,
     });
   }
 
-  // cerrar sin publicar
+  // Cerrar sin publicar (manual)
   function cerrarCadaver() {
     setCadaver((prev) => ({ ...prev, cerrado: true }));
   }
 
-  // finalizar y reiniciar
+  // Finalizar y publicar
   function finalizar(publicarPoemaCallback) {
     const texto = cadaver.rondas
       .map((r) => r.versos.join("\n"))
@@ -93,45 +96,41 @@ export function CadaverProvider({ children }) {
     reiniciarCadaver();
   }
 
-  // agregar verso
+  // Agregar verso
   function agregarVerso(usuario, texto) {
     const nombre = normalizarNombre(usuario);
+    const versoLimpio = texto.trim();
+    if (!versoLimpio) return;
 
     setCadaver((prev) => {
-      const nuevasRondas = prev.rondas.map((r) =>
-        r.numero === prev.rondaActual
-          ? { ...r, versos: [...r.versos, texto] }
-          : r
-      );
+      const idx = prev.rondaActual - 1;
 
-      const nuevosParticipantes = prev.participantes.includes(nombre)
+      const rondas = [...prev.rondas];
+      rondas[idx] = {
+        ...rondas[idx],
+        versos: [...rondas[idx].versos, versoLimpio],
+      };
+
+      const participantes = prev.participantes.includes(nombre)
         ? prev.participantes
         : [...prev.participantes, nombre];
 
       const actualizado = {
         ...prev,
-        participantes: nuevosParticipantes,
-        rondas: nuevasRondas
+        rondas,
+        participantes,
       };
 
-      // cierre automático
-      const todas = PARTICIPANTES_ENUM.every((p) =>
-        nuevosParticipantes.includes(p)
-      );
-
-      if (todas) actualizado.cerrado = true;
+      // Cierre automático
+      if (PARTICIPANTES_ENUM.every((p) => participantes.includes(p))) {
+        actualizado.cerrado = true;
+      }
 
       return actualizado;
     });
-
-    // pedir estado al backend para pista instantánea
-    setTimeout(() => {
-      apiGet("/cadaver").then((data) => {
-        if (data) setCadaver(data);
-      });
-    }, 40);
   }
 
+  // Cambiar de ronda manualmente
   function agregarRonda() {
     setCadaver((prev) => {
       const nueva = prev.rondaActual + 1;
@@ -139,7 +138,7 @@ export function CadaverProvider({ children }) {
       return {
         ...prev,
         rondas: [...prev.rondas, { numero: nueva, versos: [] }],
-        rondaActual: nueva
+        rondaActual: nueva,
       };
     });
   }
@@ -153,7 +152,7 @@ export function CadaverProvider({ children }) {
         agregarRonda,
         cerrarCadaver,
         finalizar,
-        reiniciarCadaver
+        reiniciarCadaver,
       }}
     >
       {children}

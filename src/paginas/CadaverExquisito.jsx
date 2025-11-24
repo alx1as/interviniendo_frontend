@@ -4,7 +4,6 @@ import { usePoemas } from "../contexto/PoemasContexto";
 import { useAuth } from "../contexto/AuthContexto";
 import "./CadaverExquisito.css";
 
-const PARTICIPANTES_ENUM = ["Valen", "Alexia", "Bicha", "Camila", "Maca"];
 
 export default function CadaverExquisito() {
   const { usuario } = useAuth();
@@ -21,16 +20,19 @@ export default function CadaverExquisito() {
   const [verso, setVerso] = useState("");
 
   // Última palabra del último verso
-  function pistaActual() {
-    const todos = cadaver.rondas.flatMap(r => r.versos);
-    if (todos.length === 0) return null;
+ function pistaActual() {
+  if (!cadaver?.rondas?.length) return null;
 
-    const ultimo = todos.at(-1);
-    if (!ultimo) return null;
+  const todos = cadaver.rondas.flatMap(r => r.versos);
+  if (todos.length === 0) return null;
 
-    const palabras = ultimo.trim().split(/\s+/);
-    return palabras.at(-1);
-  }
+  const ultimo = todos.at(-1);
+  if (!ultimo) return null;
+
+  const palabras = ultimo.trim().split(/\s+/);
+  return palabras.at(-1);
+}
+
 
   function enviarVerso() {
     if (!verso.trim()) return;
