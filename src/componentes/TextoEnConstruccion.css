@@ -113,3 +113,65 @@
     min-height: 150px;
   }
 }
+
+/* ─────────────────────────────────────────────
+   Ajustes suaves para móviles
+────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Reduce tamaño de los botones de toolbar */
+  .toolbar button {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+  }
+
+  /* Botón de subir imagen (label) */
+  .escribir-boton-archivo {
+    padding: 8px 14px !important;
+    font-size: 0.8rem !important;
+    background: #f4efe9 !important;
+    color: #5a4b45 !important;
+    border: 1px solid #e2d9d2 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Input de texto del link */
+  input[type="text"] {
+    font-size: 0.85rem !important;
+    padding: 6px 8px !important;
+  }
+
+  /* Previsualización más elegante */
+  img {
+    border-radius: 10px !important;
+  }
+
+  /* Botón "Usar link" más liviano */
+  .escribir-boton-archivo {
+    padding: 6px 10px !important;
+  }
+
+  /* Botones en general */
+  button {
+    font-size: 0.8rem !important;
+    padding: 6px 12px !important;
+  }
+}
+
+
+.escribir-boton-archivo {
+  background: #f6f1eb;
+  color: #3e2f2f;
+  border: 1px solid #e0d6cf;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.escribir-boton-archivo:hover {
+  background: #eee4dd;
+}
+

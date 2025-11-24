@@ -1,5 +1,6 @@
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./TextoEnConstruccion.css";
+import { optimizarImagen } from "../utils/optimizarImagen";
 
 export default function TextoEnConstruccion({
   lineas,
@@ -8,13 +9,11 @@ export default function TextoEnConstruccion({
   imagenURL,
   setImagen,
   setImagenURL,
-  handleImagen,
+  handleImagen,      // viene por props (no lo pisamos)
   handleImagenLink,
 }) {
 
-  // ─────────────────────────────────────────────
-  // A) Barra de herramientas
-  // ─────────────────────────────────────────────
+  // FORMATO
   function aplicarFormato(tag) {
     const textarea = document.getElementById("editor-poema");
     const start = textarea.selectionStart;
@@ -33,17 +32,13 @@ export default function TextoEnConstruccion({
     setTimeout(() => textarea.focus(), 0);
   }
 
-  // ─────────────────────────────────────────────
-  // B) Editar textarea grande
-  // ─────────────────────────────────────────────
+  // TEXTAREA
   function handleTextarea(e) {
     const nuevas = e.target.value.split("\n");
     onEditarLineas(nuevas);
   }
 
-  // ─────────────────────────────────────────────
-  // C) Drag & drop
-  // ─────────────────────────────────────────────
+  // DRAG & DROP
   function handleDrag(result) {
     if (!result.destination) return;
 
@@ -54,33 +49,33 @@ export default function TextoEnConstruccion({
     onEditarLineas(nuevas);
   }
 
+  // ⬅️ NUEVO: OPTIMIZAR IMAGEN ANTES DE SETEARLA
+  async function handleImagenOptimizada(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 1) Optimiza
+    const optimizada = await optimizarImagen(file);
+
+    // 2) Mostramos la imagen optimizada
+    setImagen(URL.createObjectURL(optimizada));
+
+    // 3) Si desde afuera te pasaron un handler, lo llamamos
+    if (handleImagen) handleImagen(optimizada);
+  }
+
   return (
     <div className="texto-contenedor">
       <h3>Poema en construcción</h3>
 
-      {/* ───────────────────────────────────────── */}
       {/* Toolbar */}
-      {/* ───────────────────────────────────────── */}
       <div className="toolbar">
-        <button onClick={() => aplicarFormato("b")} style={{ fontWeight: "bold" }}>
-          N
-        </button>
-
-        <button onClick={() => aplicarFormato("i")} style={{ fontStyle: "italic" }}>
-          C
-        </button>
-
-        <button
-          onClick={() => aplicarFormato("u")}
-          style={{ textDecoration: "underline" }}
-        >
-          S
-        </button>
+        <button onClick={() => aplicarFormato("b")} style={{ fontWeight: "bold" }}>N</button>
+        <button onClick={() => aplicarFormato("i")} style={{ fontStyle: "italic" }}>C</button>
+        <button onClick={() => aplicarFormato("u")} style={{ textDecoration: "underline" }}>S</button>
       </div>
 
-      {/* ───────────────────────────────────────── */}
-      {/* TEXTAREA PRINCIPAL */}
-      {/* ───────────────────────────────────────── */}
+      {/* Textarea */}
       <textarea
         id="editor-poema"
         className="texto-total"
@@ -89,11 +84,8 @@ export default function TextoEnConstruccion({
         placeholder="Tu poema aparecerá aquí…"
       />
 
-      {/* ───────────────────────────────────────── */}
-      {/* CARGA DE IMAGEN — AHORA EN EL LUGAR CORRECTO */}
-      {/* ───────────────────────────────────────── */}
+      {/* CARGA DE IMAGEN */}
       <div style={{ marginTop: "15px" }}>
-        {/* Cargar desde archivo */}
         <label htmlFor="archivo-intervenir" className="escribir-boton-archivo">
           Cargar imagen
         </label>
@@ -102,7 +94,7 @@ export default function TextoEnConstruccion({
           id="archivo-intervenir"
           type="file"
           accept="image/*"
-          onChange={handleImagen}
+          onChange={handleImagenOptimizada}   // ← usa tu optimización
           className="escribir-input-archivo"
         />
 
@@ -144,9 +136,7 @@ export default function TextoEnConstruccion({
         )}
       </div>
 
-      {/* ───────────────────────────────────────── */}
       {/* LÍNEAS ARRASTRABLES */}
-      {/* ───────────────────────────────────────── */}
       {lineas.length > 0 && (
         <div className="texto-lista">
           <DragDropContext onDragEnd={handleDrag}>
@@ -154,11 +144,7 @@ export default function TextoEnConstruccion({
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {lineas.map((linea, index) => (
-                    <Draggable
-                      key={index}
-                      draggableId={`verso-${index}`}
-                      index={index}
-                    >
+                    <Draggable key={index} draggableId={`verso-${index}`} index={index}>
                       {(provided) => (
                         <div
                           className="texto-linea"

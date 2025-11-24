@@ -91,7 +91,7 @@ export default function Intervenir() {
 
       {lineas.length > 0 && (
         <button className="boton-guardar-poema" onClick={guardar}>
-          Guardar poema
+         Publicar texto
         </button>
       )}
     </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { usePoemas } from "../contexto/PoemasContexto";
 import { useAuth } from "../contexto/AuthContexto";
+import { optimizarImagen } from "../utils/optimizarImagen";
 import "./Escribir.css";
 
 export default function Escribir() {
@@ -32,35 +33,38 @@ export default function Escribir() {
   }
 
   // ─────────────────────────────────────────────
-  // IMAGEN
+  // IMAGEN — ahora optimizada antes de convertir a Base64
   // ─────────────────────────────────────────────
-  function handleImagen(e) {
+  async function handleImagenOptimizada(e) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // 1) Optimizar archivo
+    const optimizada = await optimizarImagen(file);
+
+    // 2) Convertir a Base64 como ya hacías
     const reader = new FileReader();
     reader.onload = () => setImagen(reader.result);
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(optimizada);
   }
 
   // ─────────────────────────────────────────────
   // GUARDAR
   // ─────────────────────────────────────────────
   function guardar() {
-  if (!texto.trim()) return;
+    if (!texto.trim()) return;
 
-  guardarPoema({
-    autora: usuario?.nombre || "Anónima",
-    etiqueta: "Texto propio",
-    lineas: texto.split("\n").map((l) => l.trim()),
-    imagen: imagen || null   // ⬅️ AGREGADO
-  });
+    guardarPoema({
+      autora: usuario?.nombre || "Anónima",
+      etiqueta: "Texto propio",
+      lineas: texto.split("\n").map((l) => l.trim()),
+      imagen: imagen || null
+    });
 
-  setTexto("");
-  setImagen(null);
-  alert("Texto guardado ✔");
-}
-
+    setTexto("");
+    setImagen(null);
+    alert("Texto guardado ✔");
+  }
 
   return (
     <div className="escribir-contenedor">
@@ -76,34 +80,31 @@ export default function Escribir() {
       )}
 
       <div style={{ marginBottom: "15px", display: "flex", alignItems: "center", gap: "12px" }}>
-  <label htmlFor="archivo-imagen" className="escribir-boton-archivo">
-    Seleccionar imagen
-  </label>
+        <label htmlFor="archivo-imagen" className="escribir-boton-archivo">
+          Seleccionar imagen
+        </label>
 
-  <input
-    id="archivo-imagen"
-    type="file"
-    accept="image/*"
-    onChange={handleImagen}
-    className="escribir-input-archivo"
-  />
+        <input
+          id="archivo-imagen"
+          type="file"
+          accept="image/*"
+          onChange={handleImagenOptimizada}   // ⬅️ ahora usa optimización
+          className="escribir-input-archivo"
+        />
 
-  <span className="escribir-nombre-archivo">
-    {imagen ? "Imagen cargada ✓" : "Sin imagen"}
-  </span>
-</div>
-
+        <span className="escribir-nombre-archivo">
+          {imagen ? "Imagen cargada ✓" : "Sin imagen"}
+        </span>
+      </div>
 
       {/* Barra formato */}
       <div className="escribir-toolbar">
         <button onClick={() => aplicarFormato("b")} style={{ fontWeight: "bold" }}>
           N
         </button>
-
         <button onClick={() => aplicarFormato("i")} style={{ fontStyle: "italic" }}>
           C
         </button>
-
         <button
           onClick={() => aplicarFormato("u")}
           style={{ textDecoration: "underline" }}
@@ -136,7 +137,7 @@ export default function Escribir() {
       {/* Botón guardar */}
       {texto.trim() !== "" && (
         <button className="escribir-guardar" onClick={guardar}>
-          Guardar texto
+          Publicar texto
         </button>
       )}
     </div>

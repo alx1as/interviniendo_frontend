@@ -196,3 +196,44 @@
   font-family: "Inter", sans-serif;
   opacity: 0.85;
 }
+
+/* ───────────────────────────────────────────────
+   AJUSTES RESPONSIVE PARA BOTONES (MÓVIL)
+──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Botones toolbar (Negrita, Cursiva, Subrayado) */
+  .escribir-toolbar button {
+    padding: 5px 8px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+  }
+
+  /* Botón "Seleccionar imagen" */
+  .escribir-boton-archivo {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+    border-radius: 6px;
+  }
+
+  /* Estado del archivo cargado */
+  .escribir-nombre-archivo {
+    font-size: 0.75rem;
+    margin-left: 8px;
+  }
+
+  /* Botón “Guardar texto” */
+  .escribir-guardar {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    width: 100%;
+  }
+
+  /* Textarea más compacto */
+  .escribir-textarea {
+    min-height: 180px;
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+}
