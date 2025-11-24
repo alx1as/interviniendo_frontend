@@ -1,0 +1,24 @@
+/* RESET GLOBAL — limpio y profesional */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+/* Elimina todo lo heredado del template de Vite */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* No hay estilos globales extra. 
+   Cada página define su propio layout. */
+
+
+   html, body {
+  overflow-x: hidden;
+}

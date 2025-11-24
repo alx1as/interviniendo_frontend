@@ -1,0 +1,115 @@
+/* ─────────────────────────────────────────────
+   CONTENEDOR DE TEXTO
+────────────────────────────────────────────── */
+.texto-contenedor {
+  margin-top: 30px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Título */
+.texto-contenedor h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #2a1a1a;
+}
+
+/* Textarea grande */
+.texto-total {
+  width: 100%;
+  min-height: 180px;
+  padding: 14px;
+  border: 1px solid #e0d7d2;
+  border-radius: 12px;
+  background: #fffcfa;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #2d1e1e;
+  margin-bottom: 22px;
+  outline: none;
+  resize: vertical;
+  transition: 0.2s ease;
+  font-family: "Playfair Display", serif;
+}
+
+.texto-total:focus {
+  border-color: #b98a7b;
+  box-shadow: 0 0 6px rgba(185, 138, 123, 0.35);
+}
+
+/* Cada línea arrastrable */
+.texto-linea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #f7f3ef;
+  border: 1px solid #e3dcd6;
+  cursor: grab;
+  transition: 0.2s ease;
+}
+
+.texto-linea:hover {
+  background: #f0e9e4;
+}
+
+.texto-linea:active {
+  cursor: grabbing;
+}
+
+/* Texto de línea */
+.texto-linea-texto {
+  font-size: 1rem;
+  color: #2a1a1a;
+  font-family: "Playfair Display", serif;
+  flex: 1;
+}
+
+/* Botón borrar */
+.texto-quitar {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+  color: #6a4c4c;
+  transition: 0.2s ease;
+}
+
+.texto-quitar:hover {
+  color: #a83232;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.toolbar button {
+  padding: 6px 12px;
+  border: none;
+  background: #f1ece8;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.toolbar button:hover {
+  background: #e8dfd9;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .texto-linea {
+    padding: 8px;
+  }
+
+  .texto-total {
+    min-height: 150px;
+  }
+}

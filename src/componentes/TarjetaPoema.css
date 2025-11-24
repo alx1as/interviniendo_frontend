@@ -1,0 +1,153 @@
+.tarjeta-poema {
+  border: 1px solid #e3e3e3;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 32px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: 0.2s ease;
+}
+
+.tarjeta-poema:hover {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.tarjeta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.tarjeta-autor {
+  font-weight: 600;
+  color: #222;
+  font-size: 0.9rem;   /* más pequeño */
+  opacity: 0.9;
+}
+
+
+/* Etiquetas */
+.tarjeta-etiqueta {
+  font-size: 0.82rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.etiqueta-intervenido {
+  background-color: #d8e6ff;
+}
+
+.etiqueta-propio {
+  background-color: #ffe8d1;
+}
+
+.etiqueta-cadaver {
+  background-color: #dcf5d8;
+}
+
+/* BOTÓN VER POEMA */
+.tarjeta-ver-poema {
+  font-size: 0.82rem;
+  padding: 4px 12px;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #fafafa;
+  transition: 0.2s ease;
+}
+
+.tarjeta-ver-poema:hover {
+  background: #f0f0f0;
+  border-color: #888;
+}
+
+/* FECHA */
+.tarjeta-fecha {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 14px;
+}
+
+/* TEXTO POÉTICO */
+.tarjeta-cuerpo {
+  white-space: pre-line;      /* <<< mantiene saltos de línea */
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #111;
+  margin-bottom: 16px;
+  font-family: "Georgia", serif;
+  letter-spacing: 0.2px;
+}
+
+/* LEER MÁS */
+.tarjeta-leer-mas {
+  background: transparent;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  padding: 0;
+}
+
+.tarjeta-leer-mas:hover {
+  color: #000;
+}
+
+/* COMENTARIOS */
+.tarjeta-comentarios-bloque {
+  margin-bottom: 14px;
+}
+
+.tarjeta-comentarios-total {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.tarjeta-ultimos-comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tarjeta-comentario {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.comentario-autora {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* FORMULARIO COMENTAR */
+.tarjeta-comentar {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tarjeta-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.tarjeta-boton-comentar {
+  padding: 6px 12px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.tarjeta-boton-comentar:hover {
+  background: #000;
+}

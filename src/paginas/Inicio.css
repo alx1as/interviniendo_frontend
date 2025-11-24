@@ -1,0 +1,53 @@
+/* ───────────────────────────────────────────────
+   CONTENEDOR PRINCIPAL
+──────────────────────────────────────────────── */
+.inicio-lista {
+  max-width: 760px;
+  margin: 50px auto;
+  padding: 0 24px;
+  font-family: "Inter", sans-serif;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ───────────────────────────────────────────────
+   TÍTULO PRINCIPAL
+──────────────────────────────────────────────── */
+.inicio-titulo {
+  margin-bottom: 36px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: #2a1a1a;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.06);
+}
+
+/* ───────────────────────────────────────────────
+   EFECTO DE APARICIÓN
+──────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────
+   RESPONSIVE
+──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .inicio-lista {
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+
+  .inicio-titulo {
+    font-size: 1.6rem;
+    margin-bottom: 26px;
+  }
+}

@@ -1,0 +1,198 @@
+/* ───────────────────────────────────────────────
+   CONTENEDOR PRINCIPAL
+──────────────────────────────────────────────── */
+.escribir-contenedor {
+  padding: 28px;
+  max-width: 760px;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+  animation: fadeIn 0.35s ease;
+}
+
+/* ───────────────────────────────────────────────
+   TOOLBAR (FUENTE, BOLD, ITALIC, ETC.)
+──────────────────────────────────────────────── */
+.escribir-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.escribir-toolbar button {
+  padding: 7px 12px;
+  border: none;
+  background: #f1ece8;
+  color: #2a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s ease;
+}
+
+.escribir-toolbar button:hover {
+  background: #e8dfd9;
+}
+
+.select-fuente {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #d6cfc9;
+  background: #fefdfc;
+  font-size: 0.9rem;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+}
+
+/* ───────────────────────────────────────────────
+   ÁREA DE ESCRITURA
+──────────────────────────────────────────────── */
+.escribir-textarea {
+  width: 100%;
+  padding: 16px;
+  min-height: 240px;
+  border-radius: 12px;
+  border: 1px solid #e0d7d2;
+  background: #fffcfa;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: "Playfair Display", serif;
+  outline: none;
+  transition: 0.2s ease;
+  resize: vertical;
+}
+
+.escribir-textarea:focus {
+  border-color: #b98a7b;
+  box-shadow: 0 0 6px rgba(185, 138, 123, 0.35);
+}
+
+/* ───────────────────────────────────────────────
+   IMAGEN
+──────────────────────────────────────────────── */
+.escribir-imagen {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* ───────────────────────────────────────────────
+   BOTÓN GUARDAR
+──────────────────────────────────────────────── */
+.escribir-guardar {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #5a3a3a;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  transition: background 0.25s ease;
+}
+
+.escribir-guardar:hover {
+  background: #422929;
+}
+
+/* ───────────────────────────────────────────────
+   EFECTO SUAVE DE APARICIÓN
+──────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ───────────────────────────────────────────────
+   RESPONSIVE
+──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .escribir-contenedor {
+    padding: 18px;
+  }
+
+  .escribir-textarea {
+    min-height: 200px;
+    padding: 14px;
+  }
+
+  .escribir-toolbar {
+    gap: 8px;
+  }
+
+  .escribir-guardar {
+    width: 100%;
+  }
+}
+/* Ocultamos el input feo */
+.escribir-input-archivo {
+  display: none;
+}
+
+/* Botón elegante que reemplaza al input */
+.escribir-boton-archivo {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #f1ece8;
+  color: #2a1a1a;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  border: 1px solid #d8cfc9;
+  transition: 0.2s ease;
+}
+
+.escribir-boton-archivo:hover {
+  background: #e9e2dd;
+}
+
+/* Texto del nombre del archivo */
+.escribir-nombre-archivo {
+  font-size: 0.9rem;
+  color: #6a5a5a;
+  margin-left: 12px;
+  font-family: "Inter", sans-serif;
+}
+
+
+
+/* Ocultar input real */
+.escribir-input-archivo {
+  display: none;
+}
+
+/* Botón elegante */
+.escribir-boton-archivo {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #f1ece8;
+  color: #2a1a1a;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  border: 1px solid #d8cfc9;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.escribir-boton-archivo:hover {
+  background: #e8e1dc;
+  transform: translateY(-1px);
+}
+
+/* Texto al costado (nombre archivo o estado) */
+.escribir-nombre-archivo {
+  font-size: 0.9rem;
+  color: #6a5a5a;
+  font-family: "Inter", sans-serif;
+  opacity: 0.85;
+}
